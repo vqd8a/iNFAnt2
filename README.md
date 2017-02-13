@@ -42,7 +42,7 @@ transition graph file that is used as an input to the iNFAnt2 engine.
 
 The framework is composed by two components:(i) Generator and (ii) Engine
 
-- Generator
+- Generator:
 The generator purpose is to translate a set of regular expressions into a
 transition graph executable by the engine. The generator is an adapted version
 of the regular expression processor developed by M. Becchi.
@@ -50,7 +50,7 @@ of the regular expression processor developed by M. Becchi.
 Please refer to M. Becchi web page for more information:
   http://regex.wustl.edu/index.php/Main_Page
 
-- Engine
+- Engine:
 iNFAnt2's engine purpose is to take transition graph(s) (in text format) and run it (them)
 over an nVidia CUDA enabled GPU card. The engine is able to take input as a binary file
 (or text file) and run the NFA(s) over a single stream or packets.
