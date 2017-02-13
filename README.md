@@ -134,6 +134,7 @@ where
 -O <n>   :  0 - block size tuning not enabled; 1 - block size tuned (optional, default: 0 - not tuning)
 
 Note: The transition graphs *must* be stored in folders with the convention:
+
     Ex: Sample_NFA
 	
 	        /data/Sample_NFA/Sample_NFA_1/  -- the original graph is grouped into one subgraphs. This folder contains one file "Sample_NFA_1_1.dump"
