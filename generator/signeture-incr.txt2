@@ -1,0 +1,7 @@
+^[\x09-\x0d]*[1-9,+tgi][\x09-\x0d -~]*\x09[\x09-\x0d -~]*\x09[a-z0-9.]*\.[a-z][a-z].?.?\x09[1-9]
+^....................TRTPHOTL\x01\x02
+^[ !-~]+\x0d\x0a$
+^[\x01-\x13\x16-\$]\x01.?.?.?.?.?.?.?.?.?.?[ -~]+
+^(.?.?\x16\x03.*\x16\x03|.?.?\x01\x03\x01?.*\x0b).*(thawte|equifax secure|rsa data security, inc|verisign, inc|gte cybertrust root|entrust\.net limited)
+membername.*session.*player
+

@@ -1,0 +1,24 @@
+user-agent:aim/
+YCLC_E|CYEL
+^\x01\x11\x10\|\xf8\x02\x10\x40\x06
+^(\x13bittorrent protocol|azver\x01$|get \/scrape\?info_hash=get \/announce\?info_hash=|get \/client\/bitcomet\/|GET \\/data\?fid=)|d1:ad2:id20:|\x08'7P\)[RP]
+\x32\x26\x85\x92\x58
+user-agent: kazaa|x-kazaa(-username|-network|-ip|-supernodeip|-xferid|-xferuid|tag)
+<peerplat>|^get \/getfilebyhash\.cgi\?|^get \/queue_register\.cgi\?|^get \/getupdowninfo\.cgi\?
+^\|\/dev\/[a-z][a-z][a-z]\|[0-9a-z]*\|[0-9][0-9]\|[cfk]\|
+^(get[\x09-\x0d -~]* Accept: application\/x-rtsp-tunnelled|http\/(0\.9|1\.0|1\.1) [1-5][0-9][0-9] [\x09-\x0d -~]*a=control:rtsp:\/\/)
+ipp:\/\/
+\x01\x10\x01|\)\x10\x01\x01|0\x10\x01
+\x81.?.?.[A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P]
+x-openftalias: [-)(0-9a-z ~.]
+rtsp\/1.0 200 ok
+\xffsmb[\x72\x25]
+\x03\x9a\x89\x22\x31\x31\x31\.\x30\x30\x20\x42\x65\x74\x61\x20|\xe2\x3c\x69\x1e\x1c\xe9
+^([()]|get)(...?.?.?(reg|get|query)|.+User-Agent: (Mozilla\/4\.0 \(compatible; (MSIE 6\.0; Windows NT 5\.1;? ?\)|MSIE 5\.00; Windows 98\))))|Keep-Alive\x0d\x0a\x0d\x0a[26]
+^(\*[\x01\x02].*\x03\x0b|\*\x01.?.?.?.?\x01)|flapon|toc_signon.*0x
+\x02[0-4][0-9]:[0-9]+.*\x03$
+^[a-z][a-z0-9\-_]+|login: [\x09-\x0d -~]* name: [\x09-\x0d -~]* Directory:
+gnuclear connect\/[\x09-\x0d -~]*user-agent: gnucleus [\x09-\x0d -~]*lan:
+http\/(0\.9|1\.0|1\.1) [1-5][0-9][0-9] [\x09-\x0d -~]*(connection:|content-type:|content-length:|date:)|post [\x09-\x0d -~]* http\/[01]\.[019]
+<stream:stream[\x09-\x0d ][ -~]*[\x09-\x0d ]xmlns=['"]jabber
+
