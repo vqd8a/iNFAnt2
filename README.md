@@ -88,6 +88,7 @@ You can use the big-boy.txt as an example.
 To generate the transition graph, launch:
 
 $ cd bin
+
 $ ./regex_memory -nfa -f ../data/big-boy.txt -E ../data/big-boy.dump
 
 The big-boy.dump file will contain the transition graph.
@@ -102,12 +103,13 @@ Running the iNFAnt2 engine
 If you want to run the engine over an input file using the previously generated transition graphs (e.g. big-boy, Sample_NFA), you can launch:
 
 $ cd bin
+
 $ ./nfa_engine -n ../data/Sample_NFA/Sample_NFA -t ../data/random_stream_1MB.input -T 1024 -g 1 -p 1 -r Sample_NFA -N 3072 -Nb 1048576 -O 0
-or
+
 $ ./nfa_engine -n ../data/Sample_NFA/Sample_NFA -t ../data/random_stream_1MB.input -g 1 -p 1 -r Sample_NFA -N 3072 -Nb 1048576 -O 1
-or
+
 $ ./nfa_engine -n ../data/Sample_NFA/Sample_NFA -t ../data/random_stream_1MB.input -g 2 -p 1 -r Sample_NFA -N 3072 -Nb 1048576 -O 1
-or
+
 $ ./nfa_engine -n ../data/Sample_NFA/Sample_NFA -t ../data/random_stream_1MB.input -g 2 -p 4 -r Sample_NFA -N 3072 -Nb 1048576 -O 1
 
 $ ./nfa_engine -n ../data/big-boy/big-boy -t ../data/random_stream_1MB.input -g 1 -p 1 -r big-boy -N 99 -Nb 1048576 -O 1
