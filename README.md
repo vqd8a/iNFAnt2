@@ -83,14 +83,14 @@ For using the generator to generate the transition graph to be run by the iNFAnt
 engine, you must provide a file containing PCRE compatible regular expressions
 one per line.
 
-You can use the big-boy.txt as an example.
+You can use the big_boy.txt as an example.
 To generate the transition graph, launch:
 
 $ cd bin
 
-$ ./regex_memory -nfa -f ../data/big-boy.txt -E ../data/big-boy.dump
+$ ./regex_memory -nfa -f ../data/big_boy.txt -E ../data/big_boy.dump
 
-The big-boy.dump file will contain the transition graph.
+The big_boy.dump file will contain the transition graph.
 
 -NOTE-
 the transition graph file name *MUST* end with .dump extension in order
@@ -111,7 +111,7 @@ $ ./nfa_engine -n ../data/Sample_NFA/Sample_NFA -t ../data/random_stream_1MB.inp
 
 $ ./nfa_engine -n ../data/Sample_NFA/Sample_NFA -t ../data/random_stream_1MB.input -g 2 -p 4 -r Sample_NFA -N 3072 -Nb 1048576 -O 1
 
-$ ./nfa_engine -n ../data/big-boy/big-boy -t ../data/random_stream_1MB.input -g 1 -p 1 -r big-boy -N 99 -Nb 1048576 -O 1
+$ ./nfa_engine -n ../data/big_boy/big_boy -t ../data/random_stream_1MB.input -g 1 -p 1 -r big_boy -N 99 -Nb 1048576 -O 1
 
 where
 

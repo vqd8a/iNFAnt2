@@ -1,0 +1,100 @@
+^\x01\x01\x05\x0a
+^ajprot\x0d\x0a
+^\x03.?.?\x05$
+^(\x11\x20\x01\x90\x50\x64\x10|\xfe\xfd.?.?.?\x18|[\x01\\].?battlefield2)
+^\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff..?\x01[\x03\x04]
+^BEGIN (AUTH|VERIFICATION|GSSAPI) REQUEST\x0a
+^(longaccoun|qsver2auth|\x35[57]\x30|\+\x10\*)
+^(\$mynick |\$lock |\$key )
+^\xff\xffchallenge
+^[\xc5\xd4\xe3-\xe5].?.?.?.?([\x01\x02\x05\x14\x15\x16\x18\x19\x1a\x1b\x1c\x20\x21\x32\x33\x34\x35\x36\x38\x40\x41\x42\x43\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58[\x60\x81\x82\x90\x91\x93\x96\x97\x98\x99\x9a\x9b\x9c\x9e\xa0\xa1\xa2\xa3\xa4]|\x59................?[ -~]|\x96....$)
+^\x01[\x08\x09][\x03\x04]
+^gkrellm [23].[0-9].[0-9]\x0a$
+^[\x04\x05]\x0c.i\x01
+^\x03..?\x08...?.?.?.?.?.?.?.?.?.?.?.?.?.?.?\x05
+^..\x05\x58\x0a\x1d\x03
+^\xff\xff\xff\xffgetstatus\x0a
+^([\x13\x1b\x23\xd3\xdb\xe3]|[\x14\x1c$].......?.?.?.?.?.?.?.?.?[\xc6-\xff])
+^\xff\xff\xff\xffget(info|challenge)
+^\x80\x0c\x01quake\x03
+^\x01\x01(\x08\x08|\x1b\x1b)$
+^\x10\x03...........\x0a\x02.....\x0e
+^..\x02.............
+^GETMP3\x0d\x0aFilename|^\x01.?.?.?(\x51\x3a\+|\x51\x32\x3a)|^\x10[\x14-\x16]\x10[\x15-\x17].?.?.?.?$
+^ssh-[12]\.[0-9]
+^[\x01\x02]................?$
+^\x01....\x11\x10........\x01$
+^\( success \( 1 2 \(
+^\xff[\xfb-\xfe].\xff[\xfb-\xfe].\xff[\xfb-\xfe]
+^t\x03ni.?[\x01-\x06]?t[\x01-\x05]s[\x0a\x0b](glob|who are you$|query data)
+^(GET \/docookie\.php\?uname=|\xfd\xfd\xfd\xfd\x30\x30\x30\x30\x30)
+^\x10here=
+^..?v\$\xcf
+^rfb 00[1-9]\.00[0-9]\x0a$
+^\x06\xec\x01
+^[lb].?\x0b
+^\x58\x80........\xf3|^\x06\x58\x4e
+^\x1b\xd7\x3b\x48[\x01\x02]\x01?\x01
+^[a-z][a-z0-9]+@[1-9][0-9]+$
+^CTPv1\.[123] Kamusta.*\x0d\x0a$
+^\x01\xf4\x01\xf4
+^\xff\xff\xff\xff.*cstrikeCounter-Strike
+^\xff\xff\xff\xff.*dodDay of Defeat
+^[\x01\x02][\x01- ]\x06.*c\x82sc
+^.?.?.?.?[\x01\x02].?.?.?.?.?.?[\x01-?][a-z0-9][\x01-?a-z]*[\x02-\x06][a-z][a-z][fglmoprstuvz]?[aeop]?(um)?[\x01-\x10\x1c][\x01\x03\x04\xFF]
+^get (\/.download\/[ -~]*|\/.supernode[ -~]|\/.status[ -~]|\/.network[ -~]*|\/.files|\/.hash=[0-9a-f]*\/[ -~]*) http\/1.1||^give [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]?[0-9]?[0-9]?
+^220[\x09-\x0d -~]*ftp
+^(gnd[\x01\x02]?.?.?\x01|gnutella connect\/[012]\.[0-9]\x0d\x0a|get \/uri-res\/n2r\?urn:sha1:|get \/.*user-agent: (gtk-gnutella|bearshare|mactella|gnucleus|gnotella|limewire|imesh)|get \/.*content-type: application\/x-gnutella-packets|giv [0-9]*:[0-9a-f]*\/|queue [0-9a-f]* [1-9][0-9]?[0-9]?\.[1-9][0-9]?[0-9]?\.[1-9][0-9]?[0-9]?\.[1-9][0-9]?[0-9]?:[1-9][0-9]?[0-9]?[0-9]?|gnutella.*content-type: application\/x-gnutella|...................?lime)
+^\xff\xff\xff\xff.*hl2mpDeathmatch
+^[1-9][0-9]?[0-9]?[0-9]?[0-9]?[\x09-\x0d]*,[\x09-\x0d]*[1-9][0-9]?[0-9]?[0-9]?[0-9]?(\x0d\x0a|[\x0d\x0a])?$
+^(\* ok|a[0-9]+ noop)
+^(post[\x09-\x0d -~]*<PasswordHash>................................<\/PasswordHash><ClientVer>|\x34\x80?\x0d?\xfc\xff\x04|get[\x09-\x0d -~]*Host: imsh\.download-prod\.musicnet\.com|\x02[\x01\x02]\x83.*\x02[\x01\x02]\x83)
+^(nick[\x09-\x0d -~]*user[\x09-\x0d -~]*:|user[\x09-\x0d -~]*:[\x02-\x0d -~]*nick[\x09-\x0d -~]*\x0d\x0a)
+^(\x64.....\x70....\x50\x37|\x65.+)
+^(\x01[!-~]+|\x02[!-~]+\x0a.[\x01\x02\x03][\x01-\x0a -~]*|[\x03\x04][!-~]+[\x09-\x0d]+[a-z][\x09-\x0d -~]*|\x05[!-~]+[\x09-\x0d]+([a-z][!-~]*[\x09-\x0d]+[1-9][0-9]?[0-9]?|root[\x09-\x0d]+[!-~]+).*)\x0a$
+^(ver [ -~]*msnftp\x0d\x0aver msnftp\x0d\x0ausr|method msnmsgr:)
+^(Public|AES)Key: [0-9a-f]*\x0aEnd(Public|AES)Key\x0a$
+^(.[\x02\x06][!-~]+ [!-~]+ [0-9][0-9]?[0-9]?[0-9]?[0-9]? "[\x09-\x0d -~]+" ([0-9]|10)|1(send|get)[!-~]+ "[\x09-\x0d -~]+")
+^(dmdt.*\x01.*(""|\x11\x11|uu)|tncp.*33)
+^(20[01][\x09-\x0d -~]*AUTHINFO USER|20[01][\x09-\x0d -~]*news)
+^(nq|st)$
+^\x80\x94\x0a\x01....\x1f\x9e
+^(\+ok |-err )
+^.?.?\x02.+\x03$
+^(get \/ivs-IVSGetFileChunk|http\/(0\.9|1\.0|1\.1) [1-5][0-9][0-9] [\x09-\x0d -~]*\x23\x23\x23\x23\x23REPLAY_CHUNK_START\x23\x23\x23\x23\x23)
+^[a-z][a-z0-9][a-z0-9]+/[1-9][0-9]?[0-9]?[0-9]?00
+^\x80[\x01-"`-\x7f\x80-\xa2\xe0-\xff]?..........*\x80
+^get \/.*icy-metadata:1|icy [1-5][0-9][0-9] [\x09-\x0d -~]*(content-type:audio|icy-)
+^(invite|register|cancel|message|subscribe|notify) sip[\x09-\x0d -~]*sip/[0-2]\.[0-9]
+^220[\x09-\x0d -~]* (e?smtp|simple mail)
+^\x02\x01\x04.+([\xa0-\xa3]\x02[\x01-\x04].?.?.?.?\x02\x01.?\x02\x01.?\x30|\xa4\x06.+\x40\x04.?.?.?.?\x02\x01.?\x02\x01.?\x43)
+^(\x05..?|.\x01.[ -~]+\x01F..?.?.?.?.?.?.?)$
+^notify[\x09-\x0d ]\*[\x09-\x0d ]http\/1\.1[\x09-\x0d -~]*ssdp:(alive|byebye)|^m-search[\x09-\x0d ]\*[\x09-\x0d ]http\/1\.1[\x09-\x0d -~]*ssdp:discover
+^\xff\xff\xff\xff.....*tfTeam Fortress
+^\xf4\xbe\x03.*teamspeak
+^(\x01|\x02)[ -~]*(netascii|octet|mail)
+^(ymsg|ypns|yhoo).?.?.?.?.?.?.?[lwt].*\xc0\x80
+user-agent:aim/
+YCLC_E|CYEL
+^\x01\x11\x10\|\xf8\x02\x10\x40\x06
+^(\x13bittorrent protocol|azver\x01$|get \/scrape\?info_hash=get \/announce\?info_hash=|get \/client\/bitcomet\/|GET \\/data\?fid=)|d1:ad2:id20:|\x08'7P\)[RP]
+\x32\x26\x85\x92\x58
+user-agent: kazaa|x-kazaa(-username|-network|-ip|-supernodeip|-xferid|-xferuid|tag)
+<peerplat>|^get \/getfilebyhash\.cgi\?|^get \/queue_register\.cgi\?|^get \/getupdowninfo\.cgi\?
+^\|\/dev\/[a-z][a-z][a-z]\|[0-9a-z]*\|[0-9][0-9]\|[cfk]\|
+^(get[\x09-\x0d -~]* Accept: application\/x-rtsp-tunnelled|http\/(0\.9|1\.0|1\.1) [1-5][0-9][0-9] [\x09-\x0d -~]*a=control:rtsp:\/\/)
+ipp:\/\/
+\x01\x10\x01|\)\x10\x01\x01|0\x10\x01
+\x81.?.?.[A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P][A-P]
+x-openftalias: [-)(0-9a-z ~.]
+rtsp\/1.0 200 ok
+\xffsmb[\x72\x25]
+\x03\x9a\x89\x22\x31\x31\x31\.\x30\x30\x20\x42\x65\x74\x61\x20|\xe2\x3c\x69\x1e\x1c\xe9
+^([()]|get)(...?.?.?(reg|get|query)|.+User-Agent: (Mozilla\/4\.0 \(compatible; (MSIE 6\.0; Windows NT 5\.1;? ?\)|MSIE 5\.00; Windows 98\))))|Keep-Alive\x0d\x0a\x0d\x0a[26]
+^(\*[\x01\x02].*\x03\x0b|\*\x01.?.?.?.?\x01)|flapon|toc_signon.*0x
+\x02[0-4][0-9]:[0-9]+.*\x03$
+^[a-z][a-z0-9\-_]+|login: [\x09-\x0d -~]* name: [\x09-\x0d -~]* Directory:
+gnuclear connect\/[\x09-\x0d -~]*user-agent: gnucleus [\x09-\x0d -~]*lan:
+http\/(0\.9|1\.0|1\.1) [1-5][0-9][0-9] [\x09-\x0d -~]*(connection:|content-type:|content-length:|date:)|post [\x09-\x0d -~]* http\/[01]\.[019]
+<stream:stream[\x09-\x0d ][ -~]*[\x09-\x0d ]xmlns=['"]jabber
+
