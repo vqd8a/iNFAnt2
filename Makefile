@@ -11,3 +11,8 @@ generator:
 copy:
 	cp nfa_engine/nfa_engine bin/	
 	cp generator/regex_memory bin/
+
+clean:
+	rm -f bin/nfa_engine bin/regex_memory
+	cd generator && $(MAKE) clean
+	cd nfa_engine && $(MAKE) clean
