@@ -86,7 +86,7 @@ vector<set<unsigned> > nfa_execute(std::vector<TransitionGraph *> tg, Burst &bur
 #endif
                                    double *t_alloc, double *t_kernel, double *t_collect, int *blocksize, unsigned int *trans_per_sym, int blksiz_tuning){	
 
-   struct timeval c0, c1, c2, c3;
+   struct timeval c0, c1, c2, c3, c33, c4;
    long seconds, useconds;
    unsigned int *h_match_count, *d_match_count;
    match_type   *h_match_array, *d_match_array;
@@ -126,9 +126,12 @@ vector<set<unsigned> > nfa_execute(std::vector<TransitionGraph *> tg, Burst &bur
     
 	gettimeofday(&c0, NULL);
 	
-	unsigned int tmp_avg_count = burst.get_sizes()[burst.get_sizes().size()-1]/burst.get_sizes().size()*60/n_subsets;//just for now, size of each match array for each packet
-	
-	cout << "Maximum matches allowed:  " << (tmp_avg_count*burst.get_sizes().size()*n_subsets) << endl;
+	unsigned int tmp_avg_count = burst.get_sizes()[burst.get_sizes().size()-1]/burst.get_sizes().size()*15/n_subsets;//just for now, size of each match array for each packet
+
+	cout << "tmp_avg_count: "   << tmp_avg_count
+         << ", n_packets: "     << burst.get_sizes().size() 
+         << ", n_subsets: "     << n_subsets
+         << ", Maximum matches allowed: " << (tmp_avg_count*burst.get_sizes().size()*n_subsets) << endl;
 	
 	h_match_array         = (match_type*)malloc ((tmp_avg_count*burst.get_sizes().size()) * n_subsets * sizeof(match_type));//just for now
 	h_match_count         = (unsigned int*)malloc ((              burst.get_sizes().size()) * n_subsets * sizeof(unsigned int));//just for now 
@@ -358,23 +361,25 @@ vector<set<unsigned> > nfa_execute(std::vector<TransitionGraph *> tg, Burst &bur
 	cudaUnbindTexture(tex_input_transition_tables);	
 #endif
 	
-	seconds  = c2.tv_sec  - c1.tv_sec;
-	useconds = c2.tv_usec - c1.tv_usec;
-    *t_kernel= ((double)seconds * 1000 + (double)useconds/1000.0);
+	//seconds  = c2.tv_sec  - c1.tv_sec;
+	//useconds = c2.tv_usec - c1.tv_usec;
+    //*t_kernel= ((double)seconds * 1000 + (double)useconds/1000.0);
 	//printf("host_functions.cu: t_kernel= %lf(ms)\n", *t_kernel);
 	
 	cudaMemcpy( h_match_count,  d_match_count,                 burst.get_sizes().size()  * n_subsets * sizeof(unsigned int), cudaMemcpyDeviceToHost);
 	cudaMemcpy( h_match_array, d_match_array, (tmp_avg_count*burst.get_sizes().size()) * n_subsets * sizeof(match_type), cudaMemcpyDeviceToHost);
-		
+
+    gettimeofday(&c3, NULL);		
+
 	// Collect results
 	//Temporarily comment the following FOR loop
     printf("Collecting results and saving into files ...\n");
 	unsigned int total_matches=0;
 	for (unsigned int i = 0; i < n_subsets; i++) {
 #ifdef TEXTURE_MEM_USE
-		strcpy (filename,"../bin/Report_tex_");
+		strcpy (filename,"Report_tex_");
 #else
-        strcpy (filename,"../bin/Report_global_");
+        strcpy (filename,"Report_global_");
 #endif	
 		snprintf(bufftmp, sizeof(bufftmp),"%d",n_subsets);
 		strcat (filename,bufftmp);
@@ -394,7 +399,8 @@ vector<set<unsigned> > nfa_execute(std::vector<TransitionGraph *> tg, Burst &bur
 			total_matches += h_match_count[j + burst.get_sizes().size()*i];
 	}
 	printf("Host - Total number of matches %d\n", total_matches);
-	//Temporarily comment the following FOR loop, will uncomment it later
+
+    gettimeofday(&c33, NULL);
 
 	vector<set<unsigned> >batch_accepted_rules;
     
@@ -421,7 +427,7 @@ vector<set<unsigned> > nfa_execute(std::vector<TransitionGraph *> tg, Burst &bur
 	free(accum_state_vector_lengths);
 	free(st_vec_lengths);
 	
-	gettimeofday(&c3, NULL);
+	gettimeofday(&c4, NULL);
 	
 	seconds  = c1.tv_sec  - c0.tv_sec;
 	useconds = c1.tv_usec - c0.tv_usec;
@@ -434,6 +440,14 @@ vector<set<unsigned> > nfa_execute(std::vector<TransitionGraph *> tg, Burst &bur
 	seconds  = c3.tv_sec  - c2.tv_sec;
 	useconds = c3.tv_usec - c2.tv_usec;
     *t_collect = ((double)seconds * 1000 + (double)useconds/1000.0);
+
+	seconds  = c33.tv_sec  - c3.tv_sec;
+	useconds = c33.tv_usec - c3.tv_usec;
+	printf("host_functions.cu: t_postprocesscpu= %lf(ms)\n", ((double)seconds * 1000 + (double)useconds/1000.0));
+
+	seconds  = c4.tv_sec  - c33.tv_sec;
+	useconds = c4.tv_usec - c33.tv_usec;
+	printf("host_functions.cu: t_free= %lf(ms)\n", ((double)seconds * 1000 + (double)useconds/1000.0));
 
 	return batch_accepted_rules;
 }
