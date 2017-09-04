@@ -479,10 +479,10 @@ TransitionGraph *load_nfa_file(const char *pattern_name, unsigned int gid, unsig
 		string dump_filename;
 		if (cfg.get_good_tries()) {
 			dump_filename = p.first + prefixes[cfg.get_good_tries() - 1] + p.second 
-				+ ".dump";
+				+ ".nfa";
 		}
 		else {
-			dump_filename = p.first + "/" + p.second + ".dump";//orig
+			dump_filename = p.first + "/" + p.second + ".nfa";//orig
 			//dump_filename = p.first + "/" + p.second + ".dumpdfa";//testing
 			//cout << "pattern_name = " << pattern_name << ", p.first = " << p.first << ", p.second = " << p.second << ", dump_filename = " << dump_filename << endl;
 		}
