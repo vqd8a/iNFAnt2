@@ -31,6 +31,7 @@
 
 #include <stdio.h>
 #include <sys/time.h>
+#include <sys/stat.h>
 #include <algorithm>
 
 #include "burst.h"
@@ -39,11 +40,11 @@
 
 using namespace std;
 
+size_t getFilesize(const char* filename);
 void Usage(void);
 bool ParseCommandLine(int argc, char *argv[]);
 
 const char *pattern_name = NULL;
-const char *regex_base   = NULL;
 
 #ifdef DEBUG
 const char *timing_filename = NULL;
@@ -51,7 +52,6 @@ const char *blksiz_filename = NULL;
 #endif
 
 int total_rules   = 0;
-int total_bytes   = 0;
 int blksiz_tuning = 0;
 
 extern ConfigOptions cfg;
@@ -66,13 +66,13 @@ int main(int argc, char* argv[]){
 
 	struct timeval c1, c2, c3, c4, c5, c6;
 	long seconds, useconds;
-	double t_alloc, t_kernel, t_collect, t_NFAload, t_in/*, t_exec, t_out*/;	
+	double t_alloc, t_kernel, t_collect, t_NFAload, t_in;	
 	string str_line;
 
 #ifdef DEBUG
 	double t_exec, t_out;
-	int *rulestartvec;
-	ifstream fp_tmp;
+	int rulespergroup, *rulestartvec;
+	//ifstream fp_tmp;
 	ofstream fp_timing;
 	ofstream fp_trans;
 	ofstream fp_blksiz;
@@ -94,9 +94,11 @@ int main(int argc, char* argv[]){
 	if(!retval)
 		return 0;
 
+    unsigned int total_bytes = getFilesize(cfg.get_trace_file_name());
+
 	cout<< "-----------------User input info--------------------" << endl;
 	cout<< "Total number of rules (subgraphs): " << total_rules << endl;
-	cout<< "Total bytes: "   << total_bytes << endl;
+	cout<< "Total input bytes: "   << total_bytes << endl;
 	unsigned int n_subsets   = cfg.get_blocks_y();         
 	unsigned int n_packets   = cfg.get_parallel_packets();
 	unsigned int packet_size = ((total_bytes%n_packets)==0)?(total_bytes/n_packets):(total_bytes/n_packets+1);
@@ -108,21 +110,15 @@ int main(int argc, char* argv[]){
 
 #ifdef DEBUG
 	rulestartvec = (int*)malloc (n_subsets * sizeof(int));
-	strcpy  (filename,pattern_name);
-	strcat  (filename,"_");
-	snprintf(bufftmp, sizeof(bufftmp),"%d",n_subsets);
-	strcat  (filename,bufftmp);
-	strcat  (filename,"/");	
-	strcat  (filename,regex_base);
-	strcat  (filename,"_");
-	snprintf(bufftmp, sizeof(bufftmp),"%d",n_subsets);
-	strcat  (filename,bufftmp);
-	strcat  (filename,".tmpbin");//cout << filename <<endl;
-	fp_tmp.open(filename,ios::binary | ios::in);
-	fp_tmp.read((char *)rulestartvec, n_subsets * sizeof(int));
-	fp_tmp.close();
+	
+    if ((total_rules%n_subsets)==0)
+		rulespergroup = total_rules/n_subsets;
+	else
+		rulespergroup = total_rules/n_subsets + 1;
+	//printf("rulespergroup=%d\n",rulespergroup);
 	for (unsigned int i=0; i<n_subsets; i++) {
-		printf("rulestartvec[%d]=%d\n",i,rulestartvec[i]);
+		rulestartvec[i]=i*rulespergroup;
+		//printf("rulestartvec[%d]=%d\n",i,rulestartvec[i]);
 	}
 #endif
 
@@ -137,15 +133,9 @@ int main(int argc, char* argv[]){
 		strcat (filename,"_");
 		snprintf(bufftmp, sizeof(bufftmp),"%d",n_subsets);
 		strcat (filename,bufftmp);
-		strcat (filename,"/");	
-		strcat (filename,regex_base);
-		strcat (filename,"_");
-		snprintf(bufftmp, sizeof(bufftmp),"%d",n_subsets);
-		strcat (filename,bufftmp);
-		strcat (filename,"_");
+		strcat (filename,"/");
 		snprintf(bufftmp, sizeof(bufftmp),"%d",i+1);
-		strcat (filename,bufftmp);
-		cout<< "NFA " << i + 1 << ":"<< filename << endl;		
+		strcat (filename,bufftmp); //cout<< "NFA " << i + 1 << ":"<< filename << endl;		
 		
 		TransitionGraph *nfa_tmp = NULL;
 		
@@ -169,7 +159,7 @@ int main(int argc, char* argv[]){
 	}
 	
 	//Keep track of the number of transitions of each symbol
-	strcpy (filename,"../bin/data/Trans_per_sym_");
+	strcpy (filename,"Trans_per_sym_");
 	snprintf(bufftmp, sizeof(bufftmp),"%d",n_subsets);
 	strcat (filename,bufftmp);
 	strcat (filename,".bin");	
@@ -349,23 +339,15 @@ bool ParseCommandLine(int argc, char *argv[])
 
 	while (CurrentItem < argc) {
 
-		if (strcmp(argv[CurrentItem], "-n") == 0)
+		if (strcmp(argv[CurrentItem], "-a") == 0)
 		{
 			CurrentItem++;
 			pattern_name=argv[CurrentItem];
 			CurrentItem++;
 			continue;
 		}
-		
-		if (strcmp(argv[CurrentItem], "-r") == 0)
-		{
-			CurrentItem++;
-			regex_base=argv[CurrentItem];
-			CurrentItem++;
-			continue;
-		}
 
-		if (strcmp(argv[CurrentItem], "-t") == 0)
+		if (strcmp(argv[CurrentItem], "-i") == 0)
 		{
 			CurrentItem++;
 			char *trace_filename = NULL;
@@ -444,18 +426,6 @@ bool ParseCommandLine(int argc, char *argv[])
 				CurrentItem++;
 				continue;
 		}
-		
-		if (strcmp(argv[CurrentItem], "-Nb") == 0)
-			{
-				CurrentItem++;
-				retVal = sscanf(argv[CurrentItem],"%d", &total_bytes);
-				if(retVal!=1 || total_bytes < 1 ){
-					printf("Invalid TOTAL_BYTES number: %s\n", argv[CurrentItem]);
-					return false;
-				}
-				CurrentItem++;
-				continue;
-		}
 
 		if (strcmp(argv[CurrentItem], "-O") == 0)
 			{
@@ -467,13 +437,6 @@ bool ParseCommandLine(int argc, char *argv[])
 				}
 				CurrentItem++;
 				continue;
-		}
-		
-		if (strcmp(argv[CurrentItem], "-P") == 0)
-		{
-			CurrentItem++;
-			print_parameters = 1;
-			continue;
 		}
 
 		if (strcmp(argv[CurrentItem], "-h") == 0 || strcmp(argv[CurrentItem], "-?") == 0)
@@ -491,20 +454,30 @@ bool ParseCommandLine(int argc, char *argv[])
 
 void Usage(void) {
 	char string[]= "USAGE: ./nfa_engine [OPTIONS] \n" \
-					 "\t-n <file> :   transition graph file name with full directory path (must NOT contain the file extension)\n" \
-					 "\t-t <file> :   input file to be processed (with file extension)\n"  \
+					 "\t-a <file> :   transition graph file name with full directory path (must NOT contain the file extension)\n" \
+					 "\t-i <file> :   input file to be processed (with file extension)\n"  \
 					 "\t-T <n>    :   number of threads per block (overwritten if block size tuning feature is used)\n" \
 					 "\t-g <n>    :   number of graphs (or NFAs)(number of thread blocks in grid.y) to be executed (default: 1)\n" \
 					 "\t-p <n>    :   number of parallel packets to be examined (number of thread blocks in grid.x)(defaul: 1)\n"\
-					 "\t-r <name> :   transition graph file prefix (must NOT contain either directory path or the file extension)\n" \
 					 "\t-N <n>    :   total number of rules (subgraphs)\n" \
-					 "\t-Nb <n>   :   total number of input bytes\n" \
 					 "\t-O <n>    :   0 - block size tuning not enabled; 1 - block size tuned (optional, default: 0 - not tuning)\n" \
 #ifdef DEBUG
 					 "\t-f <name> :   timing result filename (optional, default: empty)\n" \
 					 "\t-fg <name>:   blocksize filename (optional, default: empty)\n" \
 #endif
-					 "Ex:\t./nfa_engine -n ../data/Sample_NFA/Sample_NFA -t ../data/random_stream_1MB.input -T 1024 -g 8 -p 1 -r Syn_Benchmark -N 3072 -Nb 1048576 -O 0\n" \
-					 "\t./nfa_engine -n ../data/Sample_NFA/Sample_NFA -t ../data/random_stream_1MB.input -g 8 -p 1 -r Syn_Benchmark -N 3072 -Nb 1048576 -O 1\n";
+					 "Ex:\t./nfa_engine -n ../data/Sample_NFA/Sample_NFA -t ../data/random_stream_1MB.input -T 1024 -g 8 -p 1 -N 3072 -O 0\n" \
+					 "\t./nfa_engine -n ../data/Sample_NFA/Sample_NFA -t ../data/random_stream_1MB.input -g 8 -p 1 -N 3072 -O 1\n";
 	fprintf(stderr, "%s", string);
+}
+
+/**
+ * Get the size of a file.
+ * @return The filesize, or 0 if the file does not exist.
+ */
+ size_t getFilesize(const char* filename) {
+    struct stat st;
+    if(stat(filename, &st) != 0) {
+        return 0;
+    }
+    return st.st_size;   
 }
