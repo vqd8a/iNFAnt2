@@ -181,3 +181,7 @@ Providence, RI, 2016, pp. 1-12.
 
 http://ieeexplore.ieee.org/document/7581271/
 
+
+Acknowledgements
+----------------
+This work was partly funded by grants from the NSF (EF-1124931, CCF-1629450), Achievement Rewards for College Scientists (ARCS) Foundation, Micron Technologies, and C-FAR, one of six centers of STARnet, a Semiconductor Research Corporation program sponsored by MARCO and DARPA.
