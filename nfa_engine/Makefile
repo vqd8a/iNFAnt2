@@ -5,9 +5,9 @@ HOST_OBJ = cuda_allocator config_options globals half_trie sparse transition_gra
 COMMON_HEADERS = common.h
 
 NVCC=nvcc
-#SM=sm_35
+SM=sm_35
 #SM=sm_52
-SM=sm_61
+#SM=sm_61
 CXX=g++
 CC=gcc
 
