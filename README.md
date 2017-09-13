@@ -1,4 +1,4 @@
-﻿iNFAnt2
+iNFAnt2
 =======
 
 iNFAnt2 is a prototype framework for running NFA-based matching on NVIDIA CUDA-enabled GPU cards.
@@ -88,12 +88,12 @@ To generate the transition graph, launch:
 
 $ cd bin
 
-$ ./regex_memory -nfa -f ../data/big_boy.txt -E ../data/big_boy.dump
+$ ./regex_memory -nfa -f ../data/big_boy.txt -E ../data/big_boy.nfa
 
-The big_boy.dump file will contain the transition graph.
+The big_boy.nfa file will contain the transition graph.
 
 -NOTE-
-the transition graph file name *MUST* end with .dump extension in order
+the transition graph file name *MUST* end with .nfa extension in order
 to be correctly interpreted by the engine
 
 
@@ -103,21 +103,21 @@ If you want to run the engine over an input file using the previously generated 
 
 $ cd bin
 
-$ ./nfa_engine -n ../data/Sample_NFA/Sample_NFA -t ../data/random_stream_1MB.input -T 1024 -g 1 -p 1 -r Sample_NFA -N 3072 -Nb 1048576 -O 0
+$ ./nfa_engine -a ../data/Sample_NFA/Sample_NFA -i ../data/random_stream_1MB.input -T 1024 -g 1 -p 1 -N 3072 -O 0
 
-$ ./nfa_engine -n ../data/Sample_NFA/Sample_NFA -t ../data/random_stream_1MB.input -g 1 -p 1 -r Sample_NFA -N 3072 -Nb 1048576 -O 1
+$ ./nfa_engine -a ../data/Sample_NFA/Sample_NFA -i ../data/random_stream_1MB.input -g 1 -p 1 -N 3072 -O 1
 
-$ ./nfa_engine -n ../data/Sample_NFA/Sample_NFA -t ../data/random_stream_1MB.input -g 2 -p 1 -r Sample_NFA -N 3072 -Nb 1048576 -O 1
+$ ./nfa_engine -a ../data/Sample_NFA/Sample_NFA -i ../data/random_stream_1MB.input -g 2 -p 1 -N 3072 -O 1
 
-$ ./nfa_engine -n ../data/Sample_NFA/Sample_NFA -t ../data/random_stream_1MB.input -g 2 -p 4 -r Sample_NFA -N 3072 -Nb 1048576 -O 1
+$ ./nfa_engine -a ../data/Sample_NFA/Sample_NFA -i ../data/random_stream_1MB.input -g 2 -p 4 -N 3072 -O 1
 
-$ ./nfa_engine -n ../data/big_boy/big_boy -t ../data/random_stream_1MB.input -g 1 -p 1 -r big_boy -N 99 -Nb 1048576 -O 1
+$ ./nfa_engine -a ../data/big_boy/big_boy -i ../data/random_stream_1MB.input -g 1 -p 1 -N 99 -O 1
 
 where
 
--n <file>:  the transition graph prefix with full directory path (must NOT contain the file extension)
+-a <file>:  the transition graph prefix with full directory path (must NOT contain the file extension)
 
--t <file>:  binary input file to be processed (with file extension)
+-i <file>:  binary input file to be processed (with file extension)
 
 -T <n>   :  number of threads per block (this will be overwritten if block size tuning feature is being used)
 
@@ -125,11 +125,7 @@ where
 
 -p <n>   :  number of parallel packets to be examined (number of thread blocks in x-dimension of CUDA grid)(defaul: 1)
 
--r <name>:  transition graph prefix (must NOT contain either directory path or the file extension)
-
 -N <n>   :  total number of rules (subgraphs)
-
--Nb <n>  :  total number of input bytes
 
 -O <n>   :  0 - block size tuning not enabled; 1 - block size tuned (optional, default: 0 - not tuning)
 
@@ -137,9 +133,9 @@ Note: The transition graphs *must* be stored in folders with the convention:
 
     Ex: Sample_NFA
 	
-	        /data/Sample_NFA/Sample_NFA_1/  -- the original graph is grouped into one subgraphs. This folder contains one file "Sample_NFA_1_1.dump"
+	        /data/Sample_NFA/Sample_NFA_1/  -- the original graph is grouped into one subgraphs. This folder contains one file "1.nfa"
 			
-	        /data/Sample_NFA/Sample_NFA_2/  -- the original graph is grouped into two subgraphs. This folder contains two files "Sample_NFA_2_1.dump" and "Sample_NFA_2_2.dump"
+	        /data/Sample_NFA/Sample_NFA_2/  -- the original graph is grouped into two subgraphs. This folder contains two files "1.nfa" and "2.nfa"
 			
 As output, the engine will return the cycles and rule identifiers of each matched rule (subgraph) that matched each packet.
 
