@@ -465,8 +465,8 @@ void Usage(void) {
 					 "\t-f <name> :   timing result filename (optional, default: empty)\n" \
 					 "\t-fg <name>:   blocksize filename (optional, default: empty)\n" \
 #endif
-					 "Ex:\t./nfa_engine -n ../data/Sample_NFA/Sample_NFA -t ../data/random_stream_1MB.input -T 1024 -g 8 -p 1 -N 3072 -O 0\n" \
-					 "\t./nfa_engine -n ../data/Sample_NFA/Sample_NFA -t ../data/random_stream_1MB.input -g 8 -p 1 -N 3072 -O 1\n";
+					 "Ex:\t./nfa_engine -a ../data/Sample_NFA/Sample_NFA -i ../data/random_stream_1MB.input -T 1024 -g 2 -p 1 -N 3072 -O 0\n" \
+					 "\t./nfa_engine -a ../data/Sample_NFA/Sample_NFA -i ../data/random_stream_1MB.input -g 2 -p 1 -N 3072 -O 1\n";
 	fprintf(stderr, "%s", string);
 }
 
